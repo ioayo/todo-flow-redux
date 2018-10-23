@@ -1,0 +1,10 @@
+{
+    "extends": ["airbnb", "airbnb-flow"],
+    "env": {
+        "browser": true
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+        "flowtype"
+    ]
+}
