@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import configureStore from './redux/store';
+
+import App from './components/App';
+import configureStore from './store';
 import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.sass';
 
 const store = configureStore();
 
 const root = document.getElementById('root');
 
 if (root) {
-  ReactDOM.render(<Provider store={store}><div>Hello!</div></Provider>, root); //eslint-disable-line
+  ReactDOM.render(<Provider store={store}><App /></Provider>, root); //eslint-disable-line
 }
 
 // If you want your app to work offline and load faster, you can change

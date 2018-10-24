@@ -1,12 +1,9 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension'; //eslint-disable-line
-import todoReducer from './reducers';
 import rootSaga from './sagas';
 
-export const reducers = combineReducers({
-  todos: todoReducer,
-});
+import reducers from './reducers';
 
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
