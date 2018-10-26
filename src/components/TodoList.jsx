@@ -1,23 +1,25 @@
-// @flow
-
 import React from 'react';
 import TodoItem from './TodoItem';
 import type { Todos, Id } from '../types/todos';
 
 export type Props = {
   todos: Todos,
-  onTodoClick: (id: Id) => void,
+  onChangeClick: (id: Id) => void,
   onCheckTodoClick: (id: Id) => void,
+  onRemoveClick: (id: Id) => void,
 };
 
-const TodoList = ({ todos, onTodoClick, onCheckTodoClick }: Props) => (
+const TodoList = ({
+  todos, onChangeClick, onCheckTodoClick, onRemoveClick,
+}: Props) => (
   <ul className="list-group">
     {todos.map(todo => (
       <TodoItem
         key={todo.id}
         todo={todo}
-        onClick={onTodoClick}
+        onChangeClick={onChangeClick}
         onCheckTodoClick={onCheckTodoClick}
+        onRemoveClick={onRemoveClick}
       />
     ))}
   </ul>

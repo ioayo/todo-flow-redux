@@ -1,7 +1,6 @@
-// @flow
-
 import React from 'react';
 import FilteredTodoList from '../containers/FilteredTodoList';
+import TodoModal from '../containers/TodoModal';
 import './App.sass';
 
 const App = () => (
@@ -9,6 +8,7 @@ const App = () => (
     <div className="todos">
       <h1 className="todos__title">Список дел</h1>
       <FilteredTodoList />
+      <TodoModal />
     </div>
   </div>
 );

@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 
 import App from './components/App';
 import configureStore from './store';
+// ignore flow error on service worker
+// $FlowFixMe
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.sass';

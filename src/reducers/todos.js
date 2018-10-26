@@ -1,6 +1,6 @@
-// @flow
-
-import type { Todos, Todo, Id } from '../types/todos';
+import type {
+  TodosState, Todos, Todo, Id,
+} from '../types/todos';
 import type { Action } from '../types';
 
 const addTodo = (id: Id, todo: Todo): Todo => ({
@@ -12,6 +12,20 @@ const toggleTodo = (todos: Todos, id: Id): Todos => (
   todos.map(todo => (todo.id === id ? { ...todo, completed: !todo.completed } : todo))
 );
 
+const removeTodo = (todos: Todos, id: Id): Todos => (
+  todos.filter(todo => todo.id !== id)
+);
+
+const changeTodo = (todos: Todos, todo: Todo): Todos => (
+  todos.map(t => (t.id === todo.id ? todo : t))
+);
+
+const getTodo = (todos: Todos, id: Id): Todo | {} => {
+  const todo = todos.find(t => t.id === id);
+  if (!todo) return {};
+  return todo;
+};
+
 const initialState = {
   todos: [
     {
@@ -20,12 +34,24 @@ const initialState = {
       title: 'First Todo',
       description: 'Some description',
       completed: false,
+      deadline: null,
+      completedIn: null,
+    },
+    {
+      id: 2,
+      priority: 'low',
+      title: 'Next Todo',
+      description: 'Wow! Seems Work!',
+      completed: false,
+      deadline: null,
+      completedIn: null,
     },
   ],
-  openedTodo: null,
+  openedTodo: {},
+  modalVisible: false,
 };
 
-const todosReducer = (state: Todos = initialState, action: Action): Todos => {
+const todosReducer = (state: TodosState = initialState, action: Action): TodosState => {
   switch (action.type) {
     case 'ADD_TODO':
       return {
@@ -37,10 +63,37 @@ const todosReducer = (state: Todos = initialState, action: Action): Todos => {
         ...state,
         todos: toggleTodo(state.todos, action.id),
       };
-    case 'VIEW_TODO':
+    case 'CHANGE_TODO': {
       return {
         ...state,
-        openedTodo: action.id === state.openedTodo ? null : action.id,
+        openedTodo: getTodo(state.todos, action.id),
+      };
+    }
+    case 'SAVE_TODO':
+      return {
+        ...state,
+        todos: changeTodo(state.todos, action.todo),
+      };
+    case 'REMOVE_TODO':
+      return {
+        ...state,
+        todos: removeTodo(state.todos, action.id),
+      };
+    case 'SHOW_TODO_MODAL':
+      return {
+        ...state,
+        modalVisible: true,
+      };
+    case 'RESET_OPENED_TODO': {
+      return {
+        ...state,
+        openedTodo: initialState.openedTodo,
+      };
+    }
+    case 'CLOSE_TODO_MODAL':
+      return {
+        ...state,
+        modalVisible: false,
       };
     default:
       return state;

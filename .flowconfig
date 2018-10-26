@@ -1,18 +1,24 @@
 [ignore]
 .*/node_modules/.*
 .*/build/.*
+.*/src/serviceWorker.js*
+.*\.sass
+.*\.css
 [include]
 
 [libs]
-./flow-typed
+flow-typed
 [lints]
 
 [options]
+all=true
 module.file_ext=.js
 module.file_ext=.jsx
 module.file_ext=.json
 module.file_ext=.css
 module.file_ext=.sass
-module.name_mapper.extension='css' -> 'empty/object'
-module.name_mapper.extension='sass' -> 'empty/object'
+module.name_mapper.extension='sass' -> '<PROJECT_ROOT>/stub.js.flow'
+module.name_mapper.extension='css' -> '<PROJECT_ROOT>/stub.js.flow'
 [strict]
+[untyped]
+.*/node_modules/react-bootstrap4-modal/

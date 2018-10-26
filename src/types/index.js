@@ -3,7 +3,7 @@ import type { TodosState, TodosAction } from './todos';
 
 export type ReduxInitAction = { type: '@@INIT' }
 
-export type State = TodosState;
+export type State = { todoState: TodosState };
 export type Action = ReduxInitAction | TodosAction;
 export type Store = ReduxStore<State, Action>;
 export type Dispatch = ReduxDispatch<Action>;

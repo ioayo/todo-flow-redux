@@ -1,4 +1,3 @@
-// @flow
 import type { Id, Todo, TodosAction } from '../types/todos';
 
 const nextId: Id = 0;
@@ -19,7 +18,24 @@ export const toggleTodo = (id: Id): TodosAction => ({
   id,
 });
 
-export const viewTodo = (id: Id): TodosAction => ({
-  type: 'VIEW_TODO',
+export const changeTodo = (id: Id): TodosAction => ({
+  type: 'CHANGE_TODO',
   id,
+});
+
+export const showModal = (): TodosAction => ({
+  type: 'SHOW_TODO_MODAL',
+});
+
+export const closeModal = (): TodosAction => ({
+  type: 'CLOSE_TODO_MODAL',
+});
+
+export const saveTodo = (todo: Todo): TodosAction => ({
+  type: 'SAVE_TODO',
+  todo,
+});
+
+export const resetOpenedTodo = (): TodosAction => ({
+  type: 'RESET_OPENED_TODO',
 });

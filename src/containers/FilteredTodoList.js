@@ -1,20 +1,21 @@
-// @flow
-
 import { connect } from 'react-redux';
 import type { State, Dispatch } from '../types';
 import TodoList from '../components/TodoList';
-import { toggleTodo, viewTodo } from '../actions/todo';
+import { toggleTodo, removeTodo, changeTodo } from '../actions/todo';
 
 const mapStateToProps = (state: State) => ({
   todos: state.todoState.todos,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onTodoClick: (id) => {
-    dispatch(viewTodo(id));
+  onChangeClick: (id) => {
+    dispatch(changeTodo(id));
   },
   onCheckTodoClick: (id) => {
     dispatch(toggleTodo(id));
+  },
+  onRemoveClick: (id) => {
+    dispatch(removeTodo(id));
   },
 });
 

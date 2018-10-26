@@ -1,11 +1,10 @@
-// @flow
-
 import React, { Component } from 'react';
 import type { Todo, Id } from '../types/todos';
 
 export type Props = {
-  onClick: (id: Id) => void,
+  onChangeClick: (id: Id) => void,
   onCheckTodoClick: (id: Id) => void,
+  onRemoveClick: (id: Id) => void,
   todo: Todo
 };
 
@@ -15,27 +14,43 @@ class TodoItem extends Component<Props> {
     onCheckTodoClick(todo.id);
   }
 
-  viewTodo = () => {
-    const { onClick, todo } = this.props;
-    onClick(todo.id);
+  changeTodo = () => {
+    const { onChangeClick, todo } = this.props;
+    onChangeClick(todo.id);
+  }
+
+  removeTodo = () => {
+    const { onRemoveClick, todo } = this.props;
+    onRemoveClick(todo.id);
   }
 
   render() {
     const { todo } = this.props;
-    const { checkTodo, viewTodo } = this;
+    const { checkTodo, changeTodo, removeTodo } = this;
     return (
-      <li
-        role="menuitem"
-        className="list-group-item list-group-item-action"
-        onClick={viewTodo}
-        onKeyPress={viewTodo}
-      >
-        <input
-          type="checkbox"
-          onClick={checkTodo}
-          defaultChecked={todo.completed}
-        />
-        {todo.title}
+      <li className="list-group-item list-group-item-action">
+        <div className="todo_item">
+          <input
+            type="checkbox"
+            onClick={checkTodo}
+            defaultChecked={todo.completed}
+          />
+          <span className="todo_item__title">{todo.title}</span>
+          <button
+            type="button"
+            className="todo_item__change"
+            onClick={changeTodo}
+          >
+            Редактировать
+          </button>
+          <button
+            type="button"
+            className="todo_item__delete"
+            onClick={removeTodo}
+          >
+            Удалить
+          </button>
+        </div>
       </li>
     );
   }
