@@ -2,10 +2,11 @@ import React from 'react';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
+import moment from 'moment';
 import type { Todo, Priority } from '../types/todos';
 import DateTime from './DateTime';
 
-const getPriorityLabels = (str: Priority):string => {
+const getPriorityLabel = (str: Priority):string => {
   switch (str) {
     case 'medium': return 'важная';
     case 'high': return 'очень важная';
@@ -23,6 +24,9 @@ const validateTodo = (todo: Todo):Object => {
     errors.description = 'Обязательное поле';
   }
 
+  if (moment().isAfter(todo.deadline)) {
+    errors.deadline = 'Время течет вперед. Укажите будущее время.';
+  }
   return errors;
 };
 
@@ -39,52 +43,42 @@ const TodoForm = ({ todo, onClose, onSave }:Props) => {
     <Formik
       initialValues={todo}
       validate={validateTodo}
-      onSubmit={(values: Todo) => {
+      enableReinitialize="true"
+      onSubmit={(values: Todo, { resetForm }) => {
         onSave(values);
+        resetForm(todo);
       }}
-      render={({ values, handleChange, errors }) => (
+      render={({
+        isValid,
+      }) => (
         <Form>
           <div className="form-group">
             <span>Заголовок</span>
             <Field className="form-control" type="text" name="title" />
-            <ErrorMessage name="title" component="div" />
+            <ErrorMessage className="error" name="title" component="div" />
           </div>
           <div className="form-group">
             <span>Описание</span>
             <Field className="form-control" type="text" name="description" />
-            <ErrorMessage name="description" component="div" />
+            <ErrorMessage className="error" name="description" component="div" />
           </div>
           <div className="form-group">
             <span>Приоритет задачи</span>
             <Field className="form-control" component="select" name="priority" id="priority">
-              <option value="low">{getPriorityLabels('low')}</option>
-              <option value="medium">{getPriorityLabels('medium')}</option>
-              <option value="high">{getPriorityLabels('high')}</option>
+              <option value="low">{getPriorityLabel('low')}</option>
+              <option value="medium">{getPriorityLabel('medium')}</option>
+              <option value="high">{getPriorityLabel('high')}</option>
             </Field>
           </div>
           <div className="form-group">
             <span>Дедлайн</span>
             <Field component={DateTime} name="deadline" />
           </div>
-
-          <div className="form-check">
-            <label className="form-check-label" htmlFor="completed">
-              <input
-                className="form-check-input"
-                id="completed"
-                type="checkbox"
-                name="completed"
-                defaultChecked={values.completed}
-                onChange={handleChange}
-              />
-              Пометить как выполненную
-            </label>
-          </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-danger" onClick={onClose}>
               Закрыть
             </button>
-            <button type="submit" className="btn btn-success" disabled={Object.keys(errors).length > 0}>
+            <button type="submit" className="btn btn-success" disabled={!isValid}>
               Сохранить
             </button>
           </div>

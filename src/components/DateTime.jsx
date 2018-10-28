@@ -10,29 +10,61 @@ type Props = {
     field: {
         onChange: (value: string) => void,
         onBlur: () => void,
-        name: string
+        name: string,
+        value: string
     },
     form: {
         setFieldValue: (field: string, value: string) => void,
-        values: Todo
+        setFieldTouched: (field: string, value: boolean) => void,
+        initialValues: Todo,
+        errors: Object,
+        touched: Object,
     }
 }
-class DateTime extends Component<Props> {
-  handleChange = (value: moment) => {
+
+type State = {
+  deadline: string
+}
+class DateTime extends Component<Props, State> {
+  state = {
+    deadline: '',
+  }
+
+  static getDerivedStateFromProps = (props: Props) => {
+    const { field } = props;
+    return {
+      deadline: field.value ? moment(field.value).format('DD MMMM YYYY, HH:mm') : '',
+    };
+  }
+
+  handleChange = (value: moment | '') => {
     const { form, field } = this.props;
-    form.setFieldValue(field.name, value.format('DD MMMM YYYY, hh:mm'));
+    form.setFieldValue(field.name, value ? value.format() : '');
+  }
+
+  handleBlur = () => {
+    const { form, field } = this.props;
+    form.setFieldTouched(field.name, true);
   }
 
   render() {
-    const { field, form, ...rest } = this.props;
-    const { values } = form;
+    const { field, form } = this.props;
+    const {
+      errors, touched,
+    } = form;
+    const { deadline } = this.state;
     return (
-      <Datetime
-        {...rest}
-        onChange={this.handleChange}
-        defaultValue={values.deadline}
-        locale="ru"
-      />
+      <div>
+        <Datetime
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}
+          defaultValue={deadline}
+          inputProps={{ value: deadline }}
+          locale="ru"
+        />
+        {touched[field.name]
+          && errors[field.name] && <div className="error">{errors[field.name]}</div>}
+      </div>
     );
   }
 }

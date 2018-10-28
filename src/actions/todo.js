@@ -1,10 +1,9 @@
+import shortid from 'shortid';
 import type { Id, Todo, TodosAction } from '../types/todos';
 
-const nextId: Id = 0;
-
-export const addTodo = (id: Id, todo: Todo): TodosAction => ({
+export const addTodo = (todo: Todo): TodosAction => ({
   type: 'ADD_TODO',
-  id: nextId + 1,
+  id: shortid.generate(),
   todo,
 });
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import type { Todo, Id } from '../types/todos';
 
 export type Props = {
@@ -26,9 +27,14 @@ class TodoItem extends Component<Props> {
 
   render() {
     const { todo } = this.props;
+    const { completedIn, completed, deadline } = todo;
     const { checkTodo, changeTodo, removeTodo } = this;
+    let isExpired = false;
+    if (deadline) {
+      isExpired = moment().isAfter(deadline);
+    }
     return (
-      <li className="list-group-item list-group-item-action">
+      <li className={`list-group-item ${completed ? 'list-group-item-success' : ''} ${isExpired ? 'list-group-item-danger' : ''}`}>
         <div className="todo_item">
           <input
             type="checkbox"
@@ -37,6 +43,13 @@ class TodoItem extends Component<Props> {
             readOnly
           />
           <span className="todo_item__title">{todo.title}</span>
+          {completed && (
+          <span className="todo_item__completedIn">
+            Дата и время выполнения:
+            {' '}
+            {moment(completedIn).format('DD MMMM YYYY, HH:mm')}
+          </span>
+          )}
           <button
             type="button"
             className="todo_item__change"

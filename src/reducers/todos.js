@@ -1,7 +1,23 @@
+import moment from 'moment';
 import type {
   TodosState, Todos, Todo, Id,
 } from '../types/todos';
 import type { Action } from '../types';
+
+const changeToggledTodo = (todo: Todo): Todo => {
+  if (todo.completed) {
+    return {
+      ...todo,
+      completed: false,
+      completedIn: '',
+    };
+  }
+  return {
+    ...todo,
+    completed: true,
+    completedIn: moment().format(),
+  };
+};
 
 const addTodo = (id: Id, todo: Todo): Todo => ({
   ...todo,
@@ -9,7 +25,7 @@ const addTodo = (id: Id, todo: Todo): Todo => ({
 });
 
 const toggleTodo = (todos: Todos, id: Id): Todos => (
-  todos.map(todo => (todo.id === id ? { ...todo, completed: !todo.completed } : todo))
+  todos.map(t => (t.id === id ? changeToggledTodo(t) : t))
 );
 
 const removeTodo = (todos: Todos, id: Id): Todos => (
@@ -27,26 +43,7 @@ const getTodo = (todos: Todos, id: Id): Todo | {} => {
 };
 
 const initialState = {
-  todos: [
-    {
-      id: 1,
-      priority: 'low',
-      title: 'First Todo',
-      description: 'Some description',
-      completed: false,
-      deadline: '',
-      completedIn: null,
-    },
-    {
-      id: 2,
-      priority: 'low',
-      title: 'Next Todo',
-      description: 'Wow! Seems Work!',
-      completed: false,
-      deadline: '',
-      completedIn: null,
-    },
-  ],
+  todos: [],
   openedTodo: {},
   editModalVisible: false,
   createModalVisible: false,

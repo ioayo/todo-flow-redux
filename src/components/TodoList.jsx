@@ -11,17 +11,21 @@ export type Props = {
 
 const TodoList = ({
   todos, onChangeClick, onCheckTodoClick, onRemoveClick,
-}: Props) => (
-  <ul className="list-group">
-    {todos.map(todo => (
-      <TodoItem
-        key={todo.id}
-        todo={todo}
-        onChangeClick={onChangeClick}
-        onCheckTodoClick={onCheckTodoClick}
-        onRemoveClick={onRemoveClick}
-      />
-    ))}
-  </ul>
-);
+}: Props) => {
+  if (todos.length === 0) return <div className="todos__empty-message">У вас нет задач.</div>;
+
+  return (
+    <ul className="list-group">
+      {todos.map(todo => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          onChangeClick={onChangeClick}
+          onCheckTodoClick={onCheckTodoClick}
+          onRemoveClick={onRemoveClick}
+        />
+      ))}
+    </ul>
+  );
+};
 export default TodoList;

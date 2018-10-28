@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Modal from 'react-bootstrap4-modal';
 import type { State, Dispatch } from '../types';
 import type { Todo } from '../types/todos';
-import { closeCreateModal, saveTodo } from '../actions/todo';
+import { closeCreateModal, addTodo } from '../actions/todo';
 import TodoForm from '../components/TodoForm';
 
 type Props = {
@@ -16,10 +16,10 @@ const initTodo = {
   title: '',
   description: '',
   completed: false,
-  id: -1,
+  id: '',
   priority: 'low',
   deadline: '',
-  completedIn: null,
+  completedIn: '',
 };
 
 const TodoModal = ({
@@ -34,7 +34,6 @@ const TodoModal = ({
     </div>
   </Modal>
 );
-
 const mapStateToProps = (state: State) => ({
   visible: state.todoState.createModalVisible,
 });
@@ -44,7 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(closeCreateModal());
   },
   onSave: (todo: Todo) => {
-    dispatch(saveTodo(todo));
+    dispatch(addTodo(todo));
   },
 });
 
