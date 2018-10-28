@@ -23,12 +23,12 @@ export const changeTodo = (id: Id): TodosAction => ({
   id,
 });
 
-export const showModal = (): TodosAction => ({
-  type: 'SHOW_TODO_MODAL',
+export const showEditModal = (): TodosAction => ({
+  type: 'SHOW_EDIT_MODAL',
 });
 
-export const closeModal = (): TodosAction => ({
-  type: 'CLOSE_TODO_MODAL',
+export const closeEditModal = (): TodosAction => ({
+  type: 'CLOSE_EDIT_MODAL',
 });
 
 export const saveTodo = (todo: Todo): TodosAction => ({
@@ -38,4 +38,12 @@ export const saveTodo = (todo: Todo): TodosAction => ({
 
 export const resetOpenedTodo = (): TodosAction => ({
   type: 'RESET_OPENED_TODO',
+});
+
+export const showCreateModal = (): TodosAction => ({
+  type: 'SHOW_CREATE_MODAL',
+});
+
+export const closeCreateModal = (): TodosAction => ({
+  type: 'CLOSE_CREATE_MODAL',
 });

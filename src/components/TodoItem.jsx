@@ -33,7 +33,8 @@ class TodoItem extends Component<Props> {
           <input
             type="checkbox"
             onClick={checkTodo}
-            defaultChecked={todo.completed}
+            checked={todo.completed}
+            readOnly
           />
           <span className="todo_item__title">{todo.title}</span>
           <button

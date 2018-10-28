@@ -34,7 +34,7 @@ const initialState = {
       title: 'First Todo',
       description: 'Some description',
       completed: false,
-      deadline: null,
+      deadline: '',
       completedIn: null,
     },
     {
@@ -43,12 +43,13 @@ const initialState = {
       title: 'Next Todo',
       description: 'Wow! Seems Work!',
       completed: false,
-      deadline: null,
+      deadline: '',
       completedIn: null,
     },
   ],
   openedTodo: {},
-  modalVisible: false,
+  editModalVisible: false,
+  createModalVisible: false,
 };
 
 const todosReducer = (state: TodosState = initialState, action: Action): TodosState => {
@@ -79,10 +80,10 @@ const todosReducer = (state: TodosState = initialState, action: Action): TodosSt
         ...state,
         todos: removeTodo(state.todos, action.id),
       };
-    case 'SHOW_TODO_MODAL':
+    case 'SHOW_EDIT_MODAL':
       return {
         ...state,
-        modalVisible: true,
+        editModalVisible: true,
       };
     case 'RESET_OPENED_TODO': {
       return {
@@ -90,10 +91,20 @@ const todosReducer = (state: TodosState = initialState, action: Action): TodosSt
         openedTodo: initialState.openedTodo,
       };
     }
-    case 'CLOSE_TODO_MODAL':
+    case 'CLOSE_EDIT_MODAL':
       return {
         ...state,
-        modalVisible: false,
+        editModalVisible: false,
+      };
+    case 'SHOW_CREATE_MODAL':
+      return {
+        ...state,
+        createModalVisible: true,
+      };
+    case 'CLOSE_CREATE_MODAL':
+      return {
+        ...state,
+        createModalVisible: false,
       };
     default:
       return state;

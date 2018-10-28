@@ -1,15 +1,15 @@
 import { put, takeEvery, all } from 'redux-saga/effects';
 import type { TodosAction } from '../types/todos';
-import { showModal, closeModal, resetOpenedTodo } from '../actions/todo';
+import { showEditModal, closeEditModal, resetOpenedTodo } from '../actions/todo';
 
 export default () => {
   function* handleTodos(action: TodosAction) {
     switch (action.type) {
-      case 'CHANGE_TODO': yield put(showModal());
+      case 'CHANGE_TODO': yield put(showEditModal());
         break;
-      case 'SAVE_TODO': yield put(closeModal());
+      case 'SAVE_TODO': yield put(closeEditModal());
         break;
-      case 'CLOSE_TODO_MODAL': yield put(resetOpenedTodo());
+      case 'CLOSE_EDIT_MODAL': yield put(resetOpenedTodo());
         break;
       default:
         break;
