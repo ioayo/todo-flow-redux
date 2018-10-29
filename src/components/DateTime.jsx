@@ -23,17 +23,17 @@ type Props = {
 }
 
 type State = {
-  deadline: string
+  value: string
 }
 class DateTime extends Component<Props, State> {
   state = {
-    deadline: '',
+    value: '',
   }
 
   static getDerivedStateFromProps = (props: Props) => {
     const { field } = props;
     return {
-      deadline: field.value ? moment(field.value).format('DD MMMM YYYY, HH:mm') : '',
+      value: field.value ? moment(field.value).format('DD MMMM YYYY, HH:mm') : '',
     };
   }
 
@@ -52,14 +52,14 @@ class DateTime extends Component<Props, State> {
     const {
       errors, touched,
     } = form;
-    const { deadline } = this.state;
+    const { value } = this.state;
     return (
       <div>
         <Datetime
           onChange={this.handleChange}
           onBlur={this.handleBlur}
-          defaultValue={deadline}
-          inputProps={{ value: deadline }}
+          defaultValue={value}
+          inputProps={{ value }}
           locale="ru"
         />
         {touched[field.name]

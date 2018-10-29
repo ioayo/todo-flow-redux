@@ -8,8 +8,8 @@ export type Todo = {
   +description: string,
   +completed: boolean,
   +priority: Priority,
-  +deadline: string | '',
-  +completedIn: string | ''
+  +deadline: string,
+  +completedIn: string
 };
 export type Todos = Array<Todo>;
 

@@ -40,6 +40,7 @@ class TodoItem extends Component<Props> {
             type="checkbox"
             onClick={checkTodo}
             checked={todo.completed}
+            disabled={isExpired}
             readOnly
           />
           <span className="todo_item__title">{todo.title}</span>
