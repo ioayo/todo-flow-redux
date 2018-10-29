@@ -1,7 +1,7 @@
 export type Id = string;
 
 export type Priority = 'low' | 'medium' | 'high';
-
+export type Filter = 'all' | 'low' | 'medium' | 'high';
 export type Todo = {
   +id: Id,
   +title: string,
@@ -11,14 +11,14 @@ export type Todo = {
   +deadline: string | '',
   +completedIn: string | ''
 };
-
 export type Todos = Array<Todo>;
 
 export type TodosState = {
   todos: Todos,
   openedTodo: Object,
   editModalVisible: boolean,
-  createModalVisible: boolean
+  createModalVisible: boolean,
+  filter: Filter
 }
 
 export type TodosAction =
@@ -33,3 +33,4 @@ export type TodosAction =
   | { type: 'RESET_OPENED_TODO' }
   | { type: 'SHOW_CREATE_MODAL' }
   | { type: 'CLOSE_CREATE_MODAL' }
+  | { type: 'CHANGE_FILTER', +filter: Filter }

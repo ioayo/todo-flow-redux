@@ -2,9 +2,10 @@ import { connect } from 'react-redux';
 import type { State, Dispatch } from '../types';
 import TodoList from '../components/TodoList';
 import { toggleTodo, removeTodo, changeTodo } from '../actions/todo';
+import filteredTodosSelector from '../selectors/todo';
 
 const mapStateToProps = (state: State) => ({
-  todos: state.todoState.todos,
+  todos: filteredTodosSelector(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

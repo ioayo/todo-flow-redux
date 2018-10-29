@@ -1,5 +1,7 @@
 import shortid from 'shortid';
-import type { Id, Todo, TodosAction } from '../types/todos';
+import type {
+  Id, Todo, TodosAction, Filter,
+} from '../types/todos';
 
 export const addTodo = (todo: Todo): TodosAction => ({
   type: 'ADD_TODO',
@@ -45,4 +47,9 @@ export const showCreateModal = (): TodosAction => ({
 
 export const closeCreateModal = (): TodosAction => ({
   type: 'CLOSE_CREATE_MODAL',
+});
+
+export const changeFilter = (filter: Filter): TodosAction => ({
+  type: 'CHANGE_FILTER',
+  filter,
 });

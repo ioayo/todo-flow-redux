@@ -47,6 +47,7 @@ const initialState = {
   openedTodo: {},
   editModalVisible: false,
   createModalVisible: false,
+  filter: 'all',
 };
 
 const todosReducer = (state: TodosState = initialState, action: Action): TodosState => {
@@ -102,6 +103,11 @@ const todosReducer = (state: TodosState = initialState, action: Action): TodosSt
       return {
         ...state,
         createModalVisible: false,
+      };
+    case 'CHANGE_FILTER':
+      return {
+        ...state,
+        filter: action.filter,
       };
     default:
       return state;

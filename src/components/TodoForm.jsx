@@ -6,7 +6,7 @@ import moment from 'moment';
 import type { Todo, Priority } from '../types/todos';
 import DateTime from './DateTime';
 
-const getPriorityLabel = (str: Priority):string => {
+export const getPriorityLabel = (str: Priority):string => {
   switch (str) {
     case 'medium': return 'важная';
     case 'high': return 'очень важная';
